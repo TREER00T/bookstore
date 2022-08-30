@@ -1,0 +1,21 @@
+{
+  "name": "auth-microservice",
+  "version": "1.0.0",
+  "description": "Auth Microservice",
+  "main": ".dist/index.js",
+  "scripts": {
+    "prestart": "tsc index.ts --outDir .dist" ,
+    "start": "nodemon .dist/index.js",
+    "Run": "npm-run-all --parallel start"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "author": "Ali Azmoodeh <treeroot.ir@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^10.9.1",
+    "tsyringe": "^4.7.0"
+  }
+}

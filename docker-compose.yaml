@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - 'put:/data/mongodb'
+
+  rabbitmq:
+    image: rabbitmq
+    restart: always
+    ports:
+      # AMQP protocol port
+      - "5672:5672"
+      # HTTP management UI
+      - "15672:15672"
+    volumes:
+      - 'put:/data/rabbitmq'
+
+  auth:
+    restart: always
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+    container_name: auth
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./src/auth:/app/
+    env_file:
+      - ./src/auth/.env
+    depends_on:
+      - mongo
+      - rabbitmq
+
+volumes:
+  put:
+    driver: local
+
+
