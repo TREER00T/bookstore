@@ -24,18 +24,15 @@ services:
   auth:
     restart: always
     build:
-      context: ./docker
+      context: ./src/auth
       dockerfile: Dockerfile
     container_name: auth
     ports:
-      - "3001:3001"
+      - "3010:8080"
     volumes:
-      - ./src/auth:/app/
+      - ./src/auth:/app/auth/
     env_file:
       - ./src/auth/.env
-    depends_on:
-      - mongo
-      - rabbitmq
 
 volumes:
   put:

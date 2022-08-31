@@ -4,18 +4,19 @@
   "description": "Auth Microservice",
   "main": ".dist/index.js",
   "scripts": {
-    "prestart": "tsc index.ts --outDir .dist" ,
-    "start": "nodemon .dist/index.js",
-    "Run": "npm-run-all --parallel start"
+    "prestart": "tsc index.ts --outDir .dist",
+    "start": "nodemon .dist/index.js"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.19"
   },
   "author": "Ali Azmoodeh <treeroot.ir@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "npm-run-all": "^4.1.5",
+    "express": "^4.18.1",
+    "mongodb": "^4.9.0",
     "ts-node": "^10.9.1",
-    "tsyringe": "^4.7.0"
+    "tsyringe": "^4.7.0",
+    "typescript": "^4.8.2"
   }
 }
