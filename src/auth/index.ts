@@ -1,9 +1,7 @@
-import * as express from "express";
+import RouterInterface from './src/middleware/RouterInterface';
+import Db from "./src/model/Db";
 
-let app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello World.....');
-});
+RouterInterface.start();
 
-app.listen(8080,'0.0.0.0');
+Db.createDatabase();
