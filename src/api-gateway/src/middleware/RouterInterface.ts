@@ -5,7 +5,7 @@ import Json from '../util/Json';
 import Validation from '../util/Validation';
 import Response from '../util/Response';
 import authRouter from '../route/AuthRouter';
-// import Pipeline from '../middleware/ApiPipeline';
+import Pipeline from '../middleware/ApiPipeline';
 
 let app = express();
 let router = express.Router();
@@ -36,26 +36,26 @@ export default class RouterInterface {
                     apiKey = (req?.headers?.apiKey !== undefined) ? req?.headers?.apiKey?.toString() : req?.query?.apiKey?.toString();
                 } catch (e) {
                 }
-                // let isAccessTokenVerify = Pipeline.tokenVerify(token);
-                //
-                //
-                // let isSetUserToken = (!isAccessTokenVerify) ? isAccessTokenVerify : Pipeline.tokenVerify(token);
-                // let isSetUserApiKey = Pipeline.isSetUserApiKey(apiKey);
-                //
-                // if ((!isSetUserApiKey && !isSetUserToken) || !isSetUserToken)
-                //     return Json.builder(Response.HTTP_UNAUTHORIZED_INVALID_TOKEN);
-                //
-                // if (isSetUserApiKey && isSetUserToken) {
-                //     return Pipeline.getTokenPayLoad(data => {
-                //         Pipeline.isValidApiKey(apiKey, data.phoneNumber, result => {
-                //             if (!result) {
-                //                 return Json.builder(Response.HTTP_UNAUTHORIZED_INVALID_API_KEY);
-                //             }
-                //             app.use(router);
-                //             next();
-                //         });
-                //     });
-                // }
+                let isAccessTokenVerify = Pipeline.tokenVerify(token);
+
+
+                let isSetUserToken = (!isAccessTokenVerify) ? isAccessTokenVerify : Pipeline.tokenVerify(token);
+                let isSetUserApiKey = Pipeline.isSetUserApiKey(apiKey);
+
+                if ((!isSetUserApiKey && !isSetUserToken) || !isSetUserToken)
+                    return Json.builder(Response.HTTP_UNAUTHORIZED_INVALID_TOKEN);
+
+                if (isSetUserApiKey && isSetUserToken) {
+                    return Pipeline.getTokenPayLoad((data: any) => {
+                        Pipeline.isValidApiKey(apiKey, data.phoneNumber, (result: any) => {
+                            if (!result)
+                                return Json.builder(Response.HTTP_UNAUTHORIZED_INVALID_API_KEY);
+
+                            app.use(router);
+                            next();
+                        });
+                    });
+                }
             }
 
             app.use(router);
@@ -64,6 +64,7 @@ export default class RouterInterface {
         });
 
         app.use('/api/auth', authRouter);
+
 
         app.listen(8080);
 
