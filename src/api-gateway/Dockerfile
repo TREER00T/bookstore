@@ -1,10 +1,10 @@
 FROM node:18
 
-RUN mkdir -p /app/auth/node_modules && chown -R node:node /app/auth
+RUN mkdir -p /app/node_modules && chown -R node:node /app
 
-WORKDIR /app/auth
+WORKDIR /app
 
-COPY package.json /app/auth
+COPY package.json /app
 
 RUN npm i --save-dev typescript -g && \
     npm i
@@ -13,7 +13,7 @@ USER node
 
 COPY --chown=node:node . .
 
-COPY . /app/auth
+COPY . /app
 
 EXPOSE 8080
 

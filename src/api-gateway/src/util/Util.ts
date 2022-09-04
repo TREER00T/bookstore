@@ -1,6 +1,6 @@
 export default class Util {
 
-   static splitRoute(str: any) {
+    static splitRoute(str: any) {
         if (typeof str === 'string')
             return str.split('/');
 
@@ -15,5 +15,8 @@ export default class Util {
         return isMatch[1].replace(/\\(.)/g, '$1').split('/');
     }
 
+    static isDefined(data: any): boolean {
+        return data !== null;
+    }
 
 }

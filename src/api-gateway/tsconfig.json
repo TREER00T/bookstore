@@ -21,7 +21,8 @@
     "outDir": "dist/",
     "baseUrl": "src/",
     "listFiles": false,
-    "noEmitHelpers": true
+    "noEmitHelpers": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "node_modules"

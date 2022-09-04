@@ -21,18 +21,16 @@ services:
     volumes:
       - 'put:/data/rabbitmq'
 
-  auth:
+  api-gateway:
     restart: always
     build:
-      context: ./src/auth
+      context: ./src/api-gateway
       dockerfile: Dockerfile
-    container_name: auth
+    container_name: api-gateway
     ports:
       - "3010:8080"
     volumes:
-      - ./src/auth:/app/auth/
-    env_file:
-      - ./src/auth/.env
+      - ./src/api-gateway:/app/
 
 volumes:
   put:
