@@ -21,10 +21,10 @@ export default class Validation {
         return arrayOfHttpMethods.includes(requestMethod);
     }
 
-    static requestRouteHandler(url: string, app: any) {
+    static requestRouteHandler(url: string, method: string, app: any) {
 
         let arrayOfRouteWithOutAuth = [
-            '/api/auth/generateUser'
+            'post /api/auth/generateUser'
         ];
 
         let arrayOfRoute: string[] = [];
@@ -40,19 +40,19 @@ export default class Validation {
 
 
             if (layer.method)
-                arrayOfRoute.push('/' + path.concat(Util.splitRoute(layer.regexp)).filter(Boolean).join('/'));
+                arrayOfRoute.push(method + ' /' + path.concat(Util.splitRoute(layer.regexp)).filter(Boolean).join('/'));
         }
 
         app._router.stack.forEach(print.bind(null, []));
 
         arrayOfRoute = arrayOfRoute.filter((el) => !arrayOfRouteWithOutAuth.includes(el));
 
-        let isRouteWithoutAuth = arrayOfRouteWithOutAuth.includes(url);
+        let isRouteWithoutAuth = arrayOfRouteWithOutAuth.includes(method + ' ' + url);
 
         if (isRouteWithoutAuth)
             return '';
 
-        let isRouteInAuthArr = arrayOfRoute.includes(url);
+        let isRouteInAuthArr = arrayOfRoute.includes(method + ' ' + url);
 
         if (isRouteInAuthArr)
             return 'AuthRoute';

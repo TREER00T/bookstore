@@ -28,9 +28,20 @@ services:
       dockerfile: Dockerfile
     container_name: api-gateway
     ports:
-      - "3010:8080"
+      - "3010:80"
     volumes:
       - ./src/api-gateway:/app/
+
+  auth:
+    restart: always
+    build:
+      context: ./src/auth
+      dockerfile: Dockerfile
+    container_name: auth
+    ports:
+      - "3020:80"
+    volumes:
+      - ./src/auth:/app/
 
 volumes:
   put:
