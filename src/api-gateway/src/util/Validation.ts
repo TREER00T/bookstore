@@ -1,10 +1,14 @@
 import Util from './Util';
 import Json from './Json';
+import {config} from 'dotenv';
 import Response from './Response';
 import {JWK, parse} from 'node-jose';
 import {JsonWebTokenError, TokenExpiredError} from 'jsonwebtoken';
 import * as jwt from 'jsonwebtoken';
 import ValidationException from '../exceptions/ValidationException';
+
+config();
+
 
 export default class Validation {
 

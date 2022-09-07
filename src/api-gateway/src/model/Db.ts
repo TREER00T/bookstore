@@ -25,7 +25,7 @@ export default class Db {
         client.close();
     }
 
-    static async isValidUserApikey(id: string, apiKey: string) {
+    static async isValidUserApikey(id: string, apiKey: string): Promise<any> {
 
         let result = await collection.findOne({
             _id: id,
