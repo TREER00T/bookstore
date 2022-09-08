@@ -40,9 +40,9 @@ export default class AuthController {
             return Json.builder(Response.HTTP_BAD_REQUEST);
 
         let result = await Db.isExistUser(email),
-            isExistUser = result === false;
+            isUndefined = result === false;
 
-        if (!isExistUser)
+        if (isUndefined)
             return Json.builder(Response.HTTP_NOT_FOUND);
 
         let isSignIn = await Db.isSignIn(email, Util.getHashData(bodyObject.password, result));
