@@ -45,7 +45,7 @@ export default class Db {
     static async isValidaId(id: string): Promise<any> {
 
         let result = await collection.findOne({
-            id: id
+            _id: id
         });
 
         this.close();
