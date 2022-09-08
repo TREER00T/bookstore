@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-Parser';
 import Json from '../util/Json';
-import authRouter from '../route/AuthRouter';
+import userSettingRouter from '../route/UserSettingRouter';
 
 let app = express();
 let router = express.Router();
@@ -21,7 +21,7 @@ export default class RouterInterface {
         });
 
         app.use(router);
-        app.use('/api/auth', authRouter);
+        app.use('/api/user/setting', userSettingRouter);
 
 
         app.listen(80);

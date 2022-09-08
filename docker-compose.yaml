@@ -43,6 +43,17 @@ services:
     volumes:
       - ./src/auth:/app/
 
+  user-setting:
+    restart: always
+    build:
+      context: ./src/user-setting
+      dockerfile: Dockerfile
+    container_name: user-setting
+    ports:
+      - "3030:80"
+    volumes:
+      - ./src/user-setting:/app/
+
 volumes:
   put:
     driver: local
