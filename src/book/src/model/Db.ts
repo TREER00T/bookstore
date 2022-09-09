@@ -56,11 +56,20 @@ export default class Db {
     }
 
 
-    static async update(id: string, data: any): Promise<any> {
+    static async update(id: string, data: any): Promise<void> {
 
         await collection.findOneAndUpdate({
             _id: id
         }, {$set: data}, {upsert: true});
+
+        this.close();
+    }
+
+    static async delete(id: string): Promise<void> {
+
+        await collection.findOneAndDelete({
+            _id: id
+        });
 
         this.close();
     }

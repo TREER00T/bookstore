@@ -19,6 +19,10 @@ db.listCollections({name: dbName}).next((err, isExist) => {
 });
 
 
+
+type ApiKey = { apiKey: string };
+
+
 export default class Db {
 
     static close() {
@@ -26,7 +30,7 @@ export default class Db {
     }
 
 
-    static async isExistUser(email: string): Promise<any> {
+    static async isExistUser(email: string): Promise<boolean | ApiKey> {
 
         let result = await collection.findOne({
             email: email
@@ -42,7 +46,7 @@ export default class Db {
         return Util.isDefined(result) ? result.apikey : false;
     }
 
-    static async isValidaId(id: string): Promise<any> {
+    static async isValidaId(id: string): Promise<boolean> {
 
         let result = await collection.findOne({
             _id: id
@@ -52,7 +56,7 @@ export default class Db {
         return Util.isDefined(result);
     }
 
-    static async insertUser(data: any) {
+    static async insertUser(data: any): Promise<void> {
 
         await collection.insertOne(data);
 

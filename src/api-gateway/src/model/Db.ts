@@ -25,7 +25,7 @@ export default class Db {
         client.close();
     }
 
-    static async isValidUserApikey(id: string, apiKey: string): Promise<any> {
+    static async isValidUserApikey(id: string, apiKey: string): Promise<boolean> {
 
         let result = await collection.findOne({
             _id: id,
@@ -38,7 +38,7 @@ export default class Db {
                 }
         });
 
-        return Util.isDefined(result) ? result : false;
+        return Util.isDefined(result);
     }
 
 }

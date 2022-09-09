@@ -41,4 +41,12 @@ export default class Util {
         return str.trim();
     }
 
+    static getDate() {
+        let date = new Date();
+
+        return date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1) + '-' +
+            date.getUTCDate() + ' ' + date.getUTCHours() + ':' +
+            date.getUTCMinutes() + ':' + date.getUTCSeconds() + ' ' + date.getUTCMilliseconds();
+    }
+
 }
