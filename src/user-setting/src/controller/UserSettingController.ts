@@ -10,6 +10,7 @@ let multerImage = multer().single('image');
 
 
 export default class UserSettingController {
+
     static async getInfo(req: Request) {
 
         let id = req.params?.id;
@@ -25,7 +26,6 @@ export default class UserSettingController {
 
     static async setInfo(req: Request, res: express.Response) {
 
-
         multerImage(req, res, async () => {
 
             let file = req.file,
@@ -35,7 +35,6 @@ export default class UserSettingController {
                 fname = bodyObject?.fname,
                 lname = bodyObject?.lname,
                 age = bodyObject?.age,
-                img = bodyObject?.img,
                 bio = bodyObject?.bio;
 
             if (!await Db.isExistUser(id))
@@ -49,7 +48,7 @@ export default class UserSettingController {
 
 
             if (!fileUrl) {
-                await Db.setInfo(id, {
+                await Db.update(id, {
                     fname: fname, lname: lname,
                     age: age, img: fileUrl, bio: bio
                 });
@@ -60,7 +59,58 @@ export default class UserSettingController {
 
         });
 
+    }
 
+    static async getPrivacy(req: Request) {
+
+        let id = req.params?.id;
+
+        let result = await Db.getPrivacy(id),
+            isUndefined = result === false;
+
+        if (isUndefined)
+            return Json.builder(Response.HTTP_USER_NOT_FOUND);
+
+        Json.builder(Response.HTTP_OK, result);
+
+    }
+
+
+    static async setPrivacy(req: Request) {
+
+        let bodyObject = req.body,
+            id = bodyObject?.id,
+            phone = bodyObject?.phone,
+            email = bodyObject?.email;
+
+
+        if (!await Db.isExistUser(id))
+            return Json.builder(Response.HTTP_USER_NOT_FOUND);
+
+
+        await Db.update(id, {
+            email: email, phone: phone
+        });
+
+        Json.builder(Response.HTTP_OK);
+
+    }
+
+    static async changePassword(req: Request) {
+        let bodyObject = req.body,
+            id = bodyObject?.id,
+            password = bodyObject?.password;
+
+
+        if (!await Db.isExistUser(id))
+            return Json.builder(Response.HTTP_USER_NOT_FOUND);
+
+
+        await Db.update(id, {
+            password: password
+        });
+
+        Json.builder(Response.HTTP_OK);
     }
 
 }
