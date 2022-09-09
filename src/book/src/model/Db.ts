@@ -25,19 +25,17 @@ export default class Db {
         client.close();
     }
 
-    static async getInfo(id: string): Promise<any> {
+    static async getBooks(filter: any | {}): Promise<any> {
 
-        let result = await collection.findOne({
-            _id: id
-        }, {
+        let result = await collection.find(filter, {
             projection: {
-                _id: 0,
-                fname: 1,
-                lname: 1,
-                bio: 1,
+                title: 1,
+                price: 1,
                 img: 1,
-                age: 1,
-                verifiedBadge: 1
+                genre: 1,
+                availableQuantity: 1,
+                publisher: 1,
+                author: 1
             }
         });
 
@@ -46,17 +44,10 @@ export default class Db {
         return Util.isDefined(result) ? result : false;
     }
 
-    static async getPrivacy(id: string): Promise<any> {
+    static async getDetailBook(id: string): Promise<any> {
 
         let result = await collection.findOne({
             _id: id
-        }, {
-            projection: {
-                _id: 0,
-                email: 1,
-                phone: 1,
-                ip: 1
-            }
         });
 
         this.close();
@@ -72,16 +63,6 @@ export default class Db {
         }, {$set: data}, {upsert: true});
 
         this.close();
-    }
-
-    static async isExistUser(id: string): Promise<any> {
-
-        let result = await collection.findOne({
-            _id: id
-        });
-
-        this.close();
-        return Util.isDefined(result);
     }
 
 
