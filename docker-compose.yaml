@@ -54,6 +54,17 @@ services:
     volumes:
       - ./src/user-setting:/app/
 
+  book:
+    restart: always
+    build:
+      context: ./src/book
+      dockerfile: Dockerfile
+    container_name: book
+    ports:
+      - "3040:80"
+    volumes:
+      - ./src/book:/app/
+
 volumes:
   put:
     driver: local
