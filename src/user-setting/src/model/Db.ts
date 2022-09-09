@@ -65,7 +65,7 @@ export default class Db {
     }
 
 
-    static async update(id: string, data: any): Promise<any> {
+    static async update(id: string, data: any): Promise<void> {
 
         await collection.findOneAndUpdate({
             _id: id
@@ -74,7 +74,7 @@ export default class Db {
         this.close();
     }
 
-    static async isExistUser(id: string): Promise<any> {
+    static async isExistUser(id: string): Promise<boolean> {
 
         let result = await collection.findOne({
             _id: id
