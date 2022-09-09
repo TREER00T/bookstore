@@ -1,11 +1,15 @@
-import {Request} from 'express';
+import express, {Request} from 'express';
 import Db from '../model/Db';
 import Json from '../util/Json';
+import Util from '../util/Util';
+import multer from 'multer';
+import File from '../util/File';
 import Response from '../util/Response';
+
+let multerImage = multer().single('image');
 
 
 export default class UserSettingController {
-
     static async getInfo(req: Request) {
 
         let id = req.params?.id;
@@ -19,25 +23,44 @@ export default class UserSettingController {
         Json.builder(Response.HTTP_OK, result);
     }
 
-    static async setInfo(req: Request) {
+    static async setInfo(req: Request, res: express.Response) {
 
-        let bodyObject = req.body,
-            id = bodyObject?.id,
-            fname = bodyObject?.fname,
-            lname = bodyObject?.lname,
-            age = bodyObject?.age,
-            img = bodyObject?.img,
-            bio = bodyObject?.bio;
 
-        if (!await Db.isExistUser(id))
-            return Json.builder(Response.HTTP_USER_NOT_FOUND);
+        multerImage(req, res, async () => {
 
-        await Db.setInfo(id, {
-            fname: fname, lname: lname,
-            age: age, img: img, bio: bio
+            let file = req.file,
+                fileUrl = '',
+                bodyObject = req.body,
+                id = bodyObject?.id,
+                fname = bodyObject?.fname,
+                lname = bodyObject?.lname,
+                age = bodyObject?.age,
+                img = bodyObject?.img,
+                bio = bodyObject?.bio;
+
+            if (!await Db.isExistUser(id))
+                return Json.builder(Response.HTTP_USER_NOT_FOUND);
+
+
+            if (Util.isUndefined(file))
+                return Json.builder(Response.HTTP_BAD_REQUEST);
+
+            fileUrl = File.validationAndWriteFile(file.buffer, File.getFileFormat(file.originalname)).fileUrl;
+
+
+            if (!fileUrl) {
+                await Db.setInfo(id, {
+                    fname: fname, lname: lname,
+                    age: age, img: fileUrl, bio: bio
+                });
+                return Json.builder(Response.HTTP_OK);
+            }
+
+            Json.builder(Response.HTTP_BAD_REQUEST);
+
         });
 
-        Json.builder(Response.HTTP_OK);
+
     }
 
 }
