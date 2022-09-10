@@ -57,14 +57,14 @@ export default class LikeController {
 
         count--;
 
-        await Db.updateCountForLike(bookId, count)
+        await Db.updateCountForLike(bookId, count);
         Json.builder(Response.HTTP_OK);
 
     }
 
 
-    static async getListOfBookIdForMostLikes() {
-        Json.builder(Response.HTTP_OK, await Db.getListOfBookIdForMostLikes());
+    static async getListOfBookForMostLikes() {
+        Json.builder(Response.HTTP_OK, await Db.getListOfBookForMostLikes(await Db.getListOfBookIdForMostLikes()));
     }
 
 }
