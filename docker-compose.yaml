@@ -65,6 +65,17 @@ services:
     volumes:
       - ./src/book:/app/
 
+  like:
+    restart: always
+    build:
+      context: ./src/like
+      dockerfile: Dockerfile
+    container_name: like
+    ports:
+      - "3050:80"
+    volumes:
+      - ./src/like:/app/
+
 volumes:
   put:
     driver: local
