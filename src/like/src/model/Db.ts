@@ -56,6 +56,22 @@ export default class Db {
         return result;
     }
 
+    static async getListOfBookForMostLikes(listOfBookId: string[]): Promise<any> {
+        let result = await countOfLikeCollection.find({
+            bookId: {
+                $in: [listOfBookId]
+            }
+        }, {
+            projection: {
+                _id: 0
+            }
+        });
+
+        this.close();
+
+        return result;
+    }
+
     static async updateLike(bookId: string, userId: string): Promise<void> {
 
         await likeCollection.findOneAndUpdate({
