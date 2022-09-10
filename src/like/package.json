@@ -1,0 +1,26 @@
+{
+  "name": "like-service",
+  "version": "1.0.0",
+  "description": "Like for microservices",
+  "main": ".dist/index.js",
+  "scripts": {
+    "prestart": "tsc index.ts --outDir .dist",
+    "start": "nodemon .dist/index.js"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.7.14",
+    "nodemon": "^2.0.19"
+  },
+  "author": "Ali Azmoodeh <treeroot.ir@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "mongodb": "^4.9.0",
+    "ts-node": "^10.9.1",
+    "tsyringe": "^4.7.0",
+    "typescript": "^4.8.2"
+  }
+}
